@@ -33,6 +33,7 @@ USER_AGENTS = [
 
 class FearGreedIndex(typing.NamedTuple):
     value: float
+    previous_close_value: float
     description: str
     last_update: datetime.datetime
 
@@ -59,6 +60,7 @@ def get(fetcher: Fetcher = None) -> FearGreedIndex:
     response = fetcher()["fear_and_greed"]
     return FearGreedIndex(
         value=response["score"],
+        previous_close_value=response["previous_close"],
         description=response["rating"],
         last_update=datetime.datetime.fromisoformat(response["timestamp"]),
     )
